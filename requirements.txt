@@ -1,0 +1,7 @@
+gevent
+requests
+scapy
+dnspython
+tldextract
+lxml
+bs4
