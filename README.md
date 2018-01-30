@@ -24,4 +24,4 @@ https://github.com/lijiejie/subDomainsBrute
 
 https://github.com/AnthraX1/InsightScan
 
-https://github.com/We5ter/Scanners-Box
+https://github.com/We5ter/GSDF
