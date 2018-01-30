@@ -41,16 +41,28 @@ def get_ports_conn():
 	return conn
 
 
-def insert_port(ip, port):
+def insert_port(ip, port, service=None):
 	conn = get_ports_conn()
 	cursor = conn.cursor()
-	sql = "INSERT INTO open(ip, port) VALUES(?, ?)"
+	sql = "INSERT INTO open(ip, port, service) VALUES(?, ?, ?)"
 	try:
-		status = cursor.execute(sql, (ip, port))
+		status = cursor.execute(sql, (ip, port, service))
 		conn.commit()
 	except Exception as e:
 		print e
 	conn.close()
+
+def check_port_scanned(ip, port):
+	conn = get_ports_conn()
+	cursor = conn.cursor()
+	sql = "SELECT * FROM open WHERE ip=? and port=?"
+	cursor.execute(sql, (ip, port))
+	rows = cursor.fetchall()
+	if rows:
+		return True
+	else:
+		return False
+
 
 def install_ports():
 	sqlitepath = os.path.join(config.OUTPUT_DIR, "ports.db")

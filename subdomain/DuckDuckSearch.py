@@ -40,7 +40,6 @@ def subdomain(domain):
     urls = dd.search('site:'+domain, maxPage=5)
     for url in urls:
         domains.add(urlparse(url).netloc.split(":")[0])
-    print domains
     return list(domains)
 
 if __name__ == '__main__':

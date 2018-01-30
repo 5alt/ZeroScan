@@ -184,7 +184,7 @@ for row in rows:
 		internal_domain.add(domain)
 		continue
 	if not ip_all.get(ip, None):
-		ip_all[ip] = {'domain': [], 'ports': []}
+		ip_all[ip] = {'domain': [], 'ports': [], 'service': []}
 	if domain not in ip_all[ip]['domain']:
 		ip_all[ip]['domain'].append(domain)
 conn.close()
@@ -196,6 +196,7 @@ rows = cur.fetchall()
 for row in rows:
 	ip, port, service, comment = row
 	ip_all[ip]['ports'].append(port)
+	ip_all[ip]['service'].append(service)
 conn.close()
 
 json.dump(ip_all, open(os.path.join(config.OUTPUT_DIR, "ip_all.json"), "w"))
