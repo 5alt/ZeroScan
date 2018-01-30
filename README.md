@@ -21,3 +21,7 @@ md5_salt [AT] qq.com
 ## Special Thanks
 
 https://github.com/lijiejie/subDomainsBrute
+
+https://github.com/AnthraX1/InsightScan
+
+https://github.com/We5ter/Scanners-Box

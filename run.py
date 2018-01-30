@@ -9,6 +9,7 @@ import json
 import config
 import helper, tools
 from subdomain import virustotal, dnsdb, DuckDuckSearch, crtsh
+from subdomain.GSDFA import GoogleSSLdomainFinder
 import subDomainsBrute.subDomainsBrute as subDomainsBrute
 
 class subDomainsBruteOpt:
@@ -53,6 +54,17 @@ for d in domains:
 	sub, expand = crtsh.subdomain(d)
 	subdomains.update(sub)
 	expand_domain.update(expand)
+
+# GoogleSSLdomainFinder
+for d in domains:
+	main_domain = tools.get_domain(d)
+	google_ssl_path = os.path.join(config.INPUT_DIR, "%s_google_ssl.json" % main_domain)
+	if os.path.exists(google_ssl_path):
+		subdomains.update(json.load(open(google_ssl_path, 'r')))
+	else:
+		google_ssl_domain = GoogleSSLdomainFinder(d,'show').list().keys()
+		json.dump(google_ssl_domain, open(google_ssl_path, 'w'))
+		subdomains.update(google_ssl_domain)
 
 # expand domains
 for domain in subdomains:
