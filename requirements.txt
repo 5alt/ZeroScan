@@ -5,3 +5,4 @@ dnspython
 tldextract
 lxml
 bs4
+tqdm
