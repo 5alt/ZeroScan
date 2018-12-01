@@ -92,7 +92,7 @@ class DomainInfoCollection:
                 if not cdn and not internal:
                     ips.add(ip)
                 elif cdn:
-                    self.takeover_domain_check.append((domain, ip, cname))
+                    self.takeover_domain_check.add((domain, ip, cname))
                     cdn_ip.add(ip)
                 if not internal:
                     self.internal_domain.add(domain)
