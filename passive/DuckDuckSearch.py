@@ -42,8 +42,8 @@ def subdomain(domain):
         domains.add(urlparse(url).netloc.split(":")[0])
     return list(domains)
 
-def passive_search(domain, subdomains):
-    subdomains.update(subdomain(domain))
+def passive_search(domain):
+    return subdomain(domain)
 
 if __name__ == '__main__':
     import json

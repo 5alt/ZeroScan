@@ -66,8 +66,8 @@ class GoogleSSLdomainFinder:
             self.domains = {}
             return self.domains
 
-def passive_search(domain, subdomains):
-    subdomains.update(GoogleSSLdomainFinder(domain,'show').list().keys())
+def passive_search(domain):
+    return GoogleSSLdomainFinder(domain,'show').list().keys()
 
 if __name__ == '__main__':
     print GoogleSSLdomainFinder("chaitin.cn",'show').list().keys()

@@ -2,6 +2,8 @@ import requests
 import os
 
 def pt_query(value):
+    if not os.environ.get('passivetotal_key') or not os.environ.get('passivetotal_secret'):
+        return []
     url = 'https://api.passivetotal.org/v2/enrichment/subdomains'
     auth = (os.environ.get('passivetotal_key'), os.environ.get('passivetotal_secret'))
     params = {'query': value}
@@ -18,8 +20,8 @@ def pt_query(value):
     return []
     
 
-def passive_search(domain, subdomains):
-    subdomains.update(pt_query(domain))
+def passive_search(domain):
+    return pt_query(domain)
 
 if __name__ == '__main__':
     os.environ['passivetotal_key'] = ""

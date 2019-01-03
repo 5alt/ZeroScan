@@ -43,7 +43,9 @@ class DomainInfoCollection:
         modules = load_modules(config.PASSIVE_SEARCH_DIR)
         for domain in self.domains:
             for module in modules:
-                module.passive_search(domain, self.subdomains)
+                subdomains = module.passive_search(domain)
+                subdomains = filter(lambda x: x.endswith(domain))
+                self.subdomains.update(subdomains)
 
     def active_search(self):
         scanable_domain = set()

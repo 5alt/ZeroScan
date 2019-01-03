@@ -12,8 +12,8 @@ def certsh_api(domain):
         data_set.update([cert.get('name_value')])
     return data_set
 
-def passive_search(domain, subdomains):
-    subdomains.update(certsh_api(domain))
+def passive_search(domain):
+    return certsh_api(domain)
 
 if __name__ == '__main__':
-    print certsh_api('5alt.me') 
+    print passive_search('5alt.me') 

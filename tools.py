@@ -63,9 +63,19 @@ def check_extensive_domain(domain):
 	except:
 		return False, None
 
+def check_ip(domain):
+	parts = domain.split('.')
+	if len(parts) == 4:
+		for p in parts:
+			if not p.isdigit():
+				return False
+		return True
+	return False	
 
 def scanable_subdomain(domain):
 	ret = []
+	if check_ip(domain):
+		return ret
 	if domain.startswith('*.'):
 		return [domain[2:]]
 	if list(domain).count('.') >= 3:

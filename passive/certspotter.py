@@ -13,8 +13,8 @@ def certspotter_api(domain):
             continue
     return set(subdomain_data)
 
-def passive_search(domain, subdomains):
-    subdomains.update(certspotter_api(domain))
+def passive_search(domain):
+    return certspotter_api(domain)
 
 if __name__ == '__main__':
     print certspotter_api('5alt.me') 

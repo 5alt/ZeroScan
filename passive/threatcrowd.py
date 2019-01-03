@@ -10,8 +10,8 @@ def passive_domain(domain):
 		return []
 	return set(ret)
 
-def passive_search(domain, subdomains):
-	subdomains.update(passive_domain(domain))
+def passive_search(domain):
+	return passive_domain(domain)
 
 
 if __name__ == '__main__':

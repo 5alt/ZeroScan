@@ -13,7 +13,8 @@ REPORT_FILENAME = "report.html"
 os.environ['virustotal_key'] = ""
 os.environ['passivetotal_key'] = ""
 os.environ['passivetotal_secret'] = ""
-
+os.environ['fofa_username'] = ""
+os.environ['fofa_password'] = ""
 
 PASSIVE_SEARCH_DIR = "passive"
 TAKEOVER_DIR = 'takeover'

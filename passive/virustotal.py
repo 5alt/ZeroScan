@@ -7,6 +7,7 @@ def passive_domain(domain):
 	try:
 		# virusTotalApi
 		virusTotalApiKey = os.environ.get('virustotal_key')
+		if not virusTotalApiKey: return []
 		url = 'https://www.virustotal.com/vtapi/v2/domain/report'
 		parameters = {'domain': domain, 'apikey': virusTotalApiKey}
 		domains = requests.get(url, params = parameters).json()["subdomains"]
@@ -15,8 +16,8 @@ def passive_domain(domain):
 		print e
 	return subdomains
 
-def passive_search(domain, subdomains):
-    subdomains.update(passive_domain(domain))
+def passive_search(domain):
+    return passive_domain(domain)
 
 
 if __name__ == '__main__':
