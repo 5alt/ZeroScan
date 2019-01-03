@@ -1,4 +1,5 @@
 # encoding=utf-8
+import os
 import requests
 import base64
 import re

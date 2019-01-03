@@ -44,7 +44,8 @@ class DomainInfoCollection:
         for domain in self.domains:
             for module in modules:
                 subdomains = module.passive_search(domain)
-                subdomains = filter(lambda x: x.endswith(domain))
+                subdomains = filter(lambda x: x.endswith(domain), subdomains)
+                subdomains = map(lambda x: x.lower(), subdomains)
                 self.subdomains.update(subdomains)
 
     def active_search(self):
@@ -195,7 +196,7 @@ class DomainInfoCollection:
         json.dump(list(self.cdn_domain), open(os.path.join(config.OUTPUT_DIR, "cdn_domain.json"), "w"))
         json.dump(list(self.internal_domain), open(os.path.join(config.OUTPUT_DIR, "internal_domain.json"), "w"))
 
-        with open(os.path.join(config.OUTPUT_DIR, 'domain_takeover.txt'), 'w') as f:
+        with open(os.path.join(config.OUTPUT_DIR, 'domain_takeover.txt'), 'a') as f:
             f.write('\n'.join(self.takeover_domain).strip())
         tools.report(self.ip_all, outname=config.REPORT_FILENAME)
         
