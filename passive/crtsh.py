@@ -7,8 +7,8 @@ def certsh_api(domain):
     resp = requests.get(url)
     if resp.status_code != 200:
         return []
-    fixed_raw = '[%s]' % str(resp.text).replace('}{', '},{')
-    for cert in json.loads(fixed_raw):
+    #fixed_raw = '[%s]' % str(resp.text).replace('}{', '},{')
+    for cert in json.loads(resp.text):
         data_set.update([cert.get('name_value')])
     return data_set
 
