@@ -75,4 +75,4 @@ def passive_search(domain):
     return fofa_search(domain)
 
 if __name__ == '__main__':
-    print(fofa_search('tuhu.cn'))
+    print(fofa_search('5alt.me'))

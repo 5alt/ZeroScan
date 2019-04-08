@@ -7,6 +7,11 @@ def load_domain_from_file():
 		data = f.read().strip()
 	return set(data.split('\n'))
 
+def load_alldomains_from_file():
+	with open(config.INPUT_ALL_DOMAINS_FILE, 'r') as f:
+		data = f.read().strip()
+	return set(data.split('\n'))
+
 
 def load_ips_from_file():
 	with open(os.path.join(config.OUTPUT_DIR,config.IPS), 'r') as f:

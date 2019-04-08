@@ -201,11 +201,7 @@ class DomainInfoCollection:
         tools.report(self.ip_all, outname=config.REPORT_FILENAME)
         
 
-
-'''
-main
-'''
-if __name__ == '__main__':
+def runall():
     targets = helper.load_domain_from_file()
     domain_info_coll = DomainInfoCollection(targets)
     domain_info_coll.passive_search()
@@ -215,5 +211,21 @@ if __name__ == '__main__':
     domain_info_coll.port_scan()
     domain_info_coll.collate()
     domain_info_coll.report()
+
+def runportscan():
+    targets = helper.load_alldomains_from_file()
+    domain_info_coll = DomainInfoCollection([])
+    domain_info_coll.subdomains = targets
+    domain_info_coll.process_subdomain()
+    domain_info_coll.takeover()
+    domain_info_coll.port_scan()
+    domain_info_coll.collate()
+    domain_info_coll.report()
+
+'''
+main
+'''
+if __name__ == '__main__':
+    runall()
 
 

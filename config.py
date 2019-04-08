@@ -2,6 +2,7 @@ import os
 
 INPUT_DIR = "input"
 INPUT_DOMAIN_FILE = os.path.join(INPUT_DIR, "domain.txt")
+INPUT_ALL_DOMAINS_FILE = os.path.join(INPUT_DIR, "alldomains.txt")
 
 OUTPUT_DIR = "output"
 
