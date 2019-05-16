@@ -32,6 +32,7 @@ class DomainInfoCollection:
         self.domains = domains
         self.subdomains = set()
         self.cdn_domain = set()
+        self.extensive_domain = set()
         self.ips = set()
         self.domain_ip = {}
         self.internal_domain = set()
@@ -44,9 +45,10 @@ class DomainInfoCollection:
         for domain in self.domains:
             for module in modules:
                 subdomains = module.passive_search(domain)
-                subdomains = filter(lambda x: x.endswith(domain), subdomains)
+                subdomains = filter(lambda x: x and x.endswith(domain), subdomains)
                 subdomains = map(lambda x: x.lower(), subdomains)
                 self.subdomains.update(subdomains)
+
 
     def active_search(self):
         scanable_domain = set()
@@ -57,6 +59,8 @@ class DomainInfoCollection:
 
         for domain in scanable_domain:
             isext, ip = tools.check_extensive_domain(domain)
+            if isext:
+                self.extensive_domain.add(domain)
             if not os.path.exists(os.path.join(config.OUTPUT_DIR, '%s.txt'%domain)):
                 if tools.get_domain(domain) == domain:
                     d = subDomainsBrute.SubNameBrute(target=domain, options=subDomainsBruteOpt(domain))
@@ -195,6 +199,7 @@ class DomainInfoCollection:
         json.dump(self.ip_all, open(os.path.join(config.OUTPUT_DIR, "ip_all.json"), "w"))
         json.dump(list(self.cdn_domain), open(os.path.join(config.OUTPUT_DIR, "cdn_domain.json"), "w"))
         json.dump(list(self.internal_domain), open(os.path.join(config.OUTPUT_DIR, "internal_domain.json"), "w"))
+        json.dump(list(self.extensive_domain), open(os.path.join(config.OUTPUT_DIR, "extensive_domain.json"), "w"))
 
         with open(os.path.join(config.OUTPUT_DIR, 'domain_takeover.txt'), 'a') as f:
             f.write('\n'.join(self.takeover_domain).strip())

@@ -1,6 +1,8 @@
+# coding=utf8
 import config
 import sqlite3 as db
 import os
+import requests
 
 def load_domain_from_file():
 	with open(config.INPUT_DOMAIN_FILE, 'r') as f:
@@ -19,16 +21,45 @@ def load_ips_from_file():
 	return set(data.split('\n'))
 
 def parse_domains_brute(domain, extip=None):
+	'''
+	如果域名泛解析，则通过HTTP请求的Host来判断是否真的绑定在webserver上
+	在检查响应的时候，一般同一个错误页面的响应长度是一样的，除非响应中包含 host，所以需要在替换掉host之后再比较长度
+	'''
+	def get_error_page(extip, fhost):
+		error_page = ''
+		try:
+			error_page = requests.get('https://%s' % extip, headers={'host': fhost}, verify=True).text.replace(fhost, "")
+		except Exception as e:
+			pass
+		if not error_page:
+			try:
+				fhost = 'salt66666666.'+domain
+				error_page = requests.get('http://%s' % extip, headers={'host': fhost}).text.replace(fhost, "")
+			except Exception as e:
+				pass
+		return len(error_page)
+
 	with open(os.path.join(config.OUTPUT_DIR, '%s.txt'%domain), 'r') as f:
 		data = f.read().strip()
 	ret = {}
+
+	if extip:
+		fhost = 'salt66666666.'+domain
+		error_page = get_error_page(extip, fhost)
+
 	for line in data.split('\n'):
 		if not line.strip():
 			continue
-		if extip and extip in line:
-			continue
 		line = line.replace(' ', '').replace('\t', '')
 		parts = line.split(domain)
+		if extip and extip in line:
+			if not error_page:
+				continue
+			else:
+				page = get_error_page(extip, parts[0]+domain)
+				if page == error_page:
+					continue
+
 		ret[parts[0]+domain] = parts[1]
 	return ret
 
