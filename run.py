@@ -30,7 +30,7 @@ def load_modules(path):
 class DomainInfoCollection:
     def __init__(self,domains):
         self.domains = domains
-        self.subdomains = set()
+        self.subdomains = set(self.domains)
         self.cdn_domain = set()
         self.extensive_domain = set()
         self.ips = set()
@@ -56,6 +56,7 @@ class DomainInfoCollection:
             scanable_domain.update(tools.scanable_subdomain(d))
 
         self.subdomains = set(filter(lambda x: not x.startswith('*.'), self.subdomains))
+        scanable_domain.update(self.domains)
 
         for domain in scanable_domain:
             isext, ip = tools.check_extensive_domain(domain)
