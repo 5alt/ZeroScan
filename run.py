@@ -170,6 +170,17 @@ class DomainInfoCollection:
 
         recv_process.kill()
 
+    def report_subdomain(self):
+        domains = set()
+        conn = helper.get_domains_conn()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM domains WHERE cdn=0 and internal=0")
+        rows = cur.fetchall()
+        for row in rows:
+            domain, ip, cname, cdn, internal = row
+            domains.add(domain)
+        json.dump(list(domains), open(os.path.join(config.OUTPUT_DIR, "all_subdomains.json"), "w"))
+
     def collate(self):
         conn = helper.get_domains_conn()
         cur = conn.cursor()
@@ -227,6 +238,14 @@ def runportscan():
     domain_info_coll.port_scan()
     domain_info_coll.collate()
     domain_info_coll.report()
+
+def runsubdomain():
+    targets = helper.load_alldomains_from_file()
+    domain_info_coll = DomainInfoCollection([])
+    domain_info_coll.passive_search()
+    domain_info_coll.active_search()
+    domain_info_coll.process_subdomain()
+    domain_info_coll.report_subdomain()
 
 '''
 main
