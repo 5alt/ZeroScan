@@ -240,8 +240,8 @@ def runportscan():
     domain_info_coll.report()
 
 def runsubdomain():
-    targets = helper.load_alldomains_from_file()
-    domain_info_coll = DomainInfoCollection([])
+    targets = helper.load_domain_from_file()
+    domain_info_coll = DomainInfoCollection(targets)
     domain_info_coll.passive_search()
     domain_info_coll.active_search()
     domain_info_coll.process_subdomain()
