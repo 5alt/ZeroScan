@@ -260,6 +260,11 @@ def runsubdomain():
 main
 '''
 if __name__ == '__main__':
-    runall()
+    if args[1] == "runportscan":
+        runportscan()
+    elif args[1] == "runsubdomain":
+        runsubdomain()
+    else:
+        runall()
 
 
