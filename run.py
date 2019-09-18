@@ -29,8 +29,17 @@ def load_modules(path):
 
 class DomainInfoCollection:
     def __init__(self,domains):
-        self.domains = domains
-        self.subdomains = set(self.domains)
+        self.domains = set()
+        self.subdomains = set()
+        for domain in domains:
+            if domain.startswith('*.'):
+                domain = domain[2:]
+            base_domain = tools.get_domain(domain)
+            if domain == base_domain:
+                self.domains.add(base_domain)
+            else:
+                self.subdomains.add(domain)
+
         self.cdn_domain = set()
         self.extensive_domain = set()
         self.ips = set()
@@ -49,9 +58,7 @@ class DomainInfoCollection:
                 subdomains = map(lambda x: x.lower(), subdomains)
                 self.subdomains.update(subdomains)
 
-
     def active_search(self):
-        scanable_domain = set()
         for d in self.subdomains:
             scanable_domain.update(tools.scanable_subdomain(d))
 
@@ -84,6 +91,8 @@ class DomainInfoCollection:
 
         ips = set()
         cdn_ip = set()
+
+        self.subdomains.update(self.domains)
 
         for domain in self.subdomains:
             cname = tools.get_cname(domain)
