@@ -59,6 +59,7 @@ class DomainInfoCollection:
                 self.subdomains.update(subdomains)
 
     def active_search(self):
+        scanable_domain = set()
         for d in self.subdomains:
             scanable_domain.update(tools.scanable_subdomain(d))
 
