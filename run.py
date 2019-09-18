@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 from scapy.all import *
-import os
+import os, sys
 import subprocess
 import time
 import sqlite3 as db
@@ -260,9 +260,9 @@ def runsubdomain():
 main
 '''
 if __name__ == '__main__':
-    if args[1] == "runportscan":
+    if sys.argv[1] == "runportscan":
         runportscan()
-    elif args[1] == "runsubdomain":
+    elif sys.argv[1] == "runsubdomain":
         runsubdomain()
     else:
         runall()
